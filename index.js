@@ -1,5 +1,8 @@
 // TODO: Include packages needed for this application
+const { rejects } = require('assert');
+const fs = require('fs');
 const inquirer = require('inquirer');
+const { resolve } = require('path');
 const { generateMarkdown } = require('./utils/generateMarkdown')
 
 // TODO: Create an array of questions for user input
@@ -133,7 +136,7 @@ const questions = data => {
             type: "list",
             name: "license",
             message: "Choose desired license.",
-            choices: ["MIT", "Apache", ""],
+            choices: ["MIT", "Apache", "GNU GPLv3"],
             when: ({ confirmLicense }) => confirmLicense
           },
     ])
@@ -144,13 +147,31 @@ const questions = data => {
 };
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
+function writeToFile(fileContent) {
+    return new Promise((resolve, rejects) => {
+        fs.writeFile('./dist/README.md', fileContent, err => {
+            if (err) {
+                rejects(err);
+                return;
+            }
 
-}
+            resolve({
+                ok: true, 
+                message: "file created"
+            });
+        });
+    }); 
+};
 
 // TODO: Create a function to initialize app
 questions() 
     .then(data => {
         return generateMarkdown(data);
     })
-    // .then()
+    .then(pageMd => {
+        // console.log(pageMd)
+        return writeToFile(pageMd)
+    })
+    .catch(err => {
+        console.log(err)
+    });
