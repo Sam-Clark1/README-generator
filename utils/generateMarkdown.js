@@ -1,3 +1,4 @@
+// Generates badge at top of file showing license being used. If no license, returns blank.
 renderLicenseBadge = license => {
   if (!license) {
     return '';
@@ -8,6 +9,7 @@ renderLicenseBadge = license => {
   `;
 };
 
+// Generates link to website of license if a license is confirmed being used in project. 
 renderLicenseLink = license => {
 if (license == 'MIT'){
   return `
@@ -24,6 +26,7 @@ if (license == 'MIT'){
 };
 };
 
+// Generates text section stating which license is being used and calls a function to create a link to that license's website. If no license, returns blank.
 renderLicenseSection = license => {
   if (!license) {
     return '';
@@ -51,6 +54,7 @@ renderTestSection = test => {
   return test;
 };
 
+// function that takes inputed data from quesitons in index.js and returns this text to be inputed in a README.md file.
 generateMarkdown = data => {
   return `
 ${renderLicenseBadge(data.license)}
@@ -87,4 +91,5 @@ ${renderLicenseSection(data.license)}
 `;
 };
 
+// exports the generateMarkdown function to be used by other files
 module.exports = {generateMarkdown};

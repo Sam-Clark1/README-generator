@@ -4,6 +4,7 @@ const { rejects } = require('assert');
 const { resolve } = require('path');
 const { generateMarkdown } = require('./utils/generateMarkdown')
 
+// Array of questions that are to be answered by user which is using Inquirer.js
 const questions = () => {
     return inquirer.prompt([
         {
@@ -144,6 +145,7 @@ const questions = () => {
     })
 };
 
+// uses the fs module of node.js and a Promise to generate the README file which has all inputed data
 writeToFile = fileContent => {
     return new Promise((resolve, rejects) => {
         fs.writeFile('./dist/README.md', fileContent, err => {
@@ -160,6 +162,7 @@ writeToFile = fileContent => {
     }); 
 };
 
+// Once node index.js is called from command line, these functions are called which creates the README file from inputed data
 questions() 
     .then(data => {
         return generateMarkdown(data);
