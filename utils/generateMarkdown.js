@@ -1,50 +1,57 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {
+renderLicenseBadge = license => {
   if (!license) {
     return '';
-  }
+  };
   
   return `
   <img src="https://img.shields.io/badge/license-${license}-blue" alt="badge"></img>
-  `
-}
+  `;
+};
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(license) {
+renderLicenseLink = license => {
 if (license == 'MIT'){
   return `
   <a href=https://github.com/microsoft/vscode/blob/main/LICENSE.txt>${license}</a>
-  `
+  `;
 } else if (license == 'Apache'){
   return `
   <a href=https://www.apache.org/licenses/LICENSE-2.0>${license}</a>
-  `
+  `;
 } else {
   return `
   <a href=https://choosealicense.com/licenses/gpl-3.0/>${license}</a>
-  `
-}
+  `;
+};
+};
 
-  
-}
-
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {
+renderLicenseSection = license => {
   if (!license) {
     return '';
-  }
+  };
 
   return `
   ## License
   Licensed under the ${renderLicenseLink(license)} license.
-  `
-}
+  `;
+};
 
-// TODO: Create a function to generate markdown for README
-function generateMarkdown(data) {
+renderContributeSection = contribute => {
+  if (!contribute) {
+    return 'Not looking for contributions at this time.';
+  };
+
+  return contribute;
+};
+
+renderTestSection = test => {
+  if (!test) {
+    return 'Currently no developed ways to test this project.';
+  };
+
+  return test;
+};
+
+generateMarkdown = data => {
   return `
 ${renderLicenseBadge(data.license)}
 # ${data.title}
@@ -66,18 +73,18 @@ ${data.install}
 ${data.usage}
 
 ## Contributing
-${data.contribute}
+${renderContributeSection(data.contribute)}
 
 ## Tests
-${data.tests}
+${renderTestSection(data.tests)}
 
 ## Questions
-${data.github}
-${data.email}
+If you have questions, you can email me at ${data.email} or you can checkout my repos
+on my <a href=https://github.com/${data.github}>GitHub</a>.
 
 ${renderLicenseSection(data.license)}
 
 `;
-}
+};
 
 module.exports = {generateMarkdown};
